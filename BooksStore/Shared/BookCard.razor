@@ -1,4 +1,4 @@
-<div style="border:1px solid black; padding:3px" @attributes="UserAttributes">
+<div style="@BackgroundStyle" @attributes="UserAttributes" class="card">
     <h6>@Book?.Title</h6>
 
     <p>Author: @Book?.AuthorName Name</p>
@@ -7,11 +7,15 @@
 
     @if (WithButton)
     {
-        <button style="width:100%" @onclick="AddToCart">Add to Cart</button>
+        <button class="main-button" @onclick="AddToCart">Add to Cart</button>
     }
 </div>
 
 @code {
+
+    [CascadingParameter(Name = "BackgroundStyle")]
+    public string? BackgroundStyle { get; set; }
+
     [Parameter] [EditorRequired] public Book? Book { get; set; }
     [Parameter] public bool WithButton { get; set; } = true;
 
@@ -23,6 +27,36 @@
     private void AddToCart()
     {
         OnAddToCartClicked.InvokeAsync(Book);
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        if (parameters.TryGetValue<string>(nameof(BackgroundStyle), out var value))
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                BackgroundStyle = "background-color:white";
+            }
+        }
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch data from the API
+    }
+
+    // Validate the Book parameter and throws an exception if it's null
+    protected override void OnParametersSet()
+    {
+        if (Book == null)
+            throw new ArgumentNullException(nameof(Book));
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Make a JavaScript call to manipulate the DOM elements
     }
 
 }

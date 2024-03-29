@@ -52,7 +52,7 @@ Welcome to your new app.
         _books = await BooksService.GetAllBooksAsync();
     }
     
-    private List<Book> _booksCart = [];
+    private readonly List<Book> _booksCart = [];
     private void AddToCart(Book selectedBook)
     {
         _booksCart.Add(selectedBook);
