@@ -37,8 +37,19 @@ Welcome to your new app.
     <p>Api Url: @Configuration["ApiUrl"]</p>
 }
 
+<ModalPopup Title="Hi!" IsOpen="@_isWelcomeModalOpen" OnCloseClicked="() => _isWelcomeModalOpen = false">
+    <ChildContent>
+        <p>Welcome to our Books Store, here you will find a huge collection of books to help you build you career in software development, enjoy it!</p>
+    </ChildContent>
+    <FooterContent>
+        <button class="btn btn-primary" @onclick="() => _isWelcomeModalOpen = false">Discover It</button>
+    </FooterContent>
+</ModalPopup>
+
 @code
 {
+    private bool _isWelcomeModalOpen = true;
+    
     private readonly Book _firstBook = new()
     {
         AuthorName = "John Smith",
