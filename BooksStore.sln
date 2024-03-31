@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore", "BooksStore\BooksStore.csproj", "{D0BCAB91-5D58-48EE-9EC2-67F1719212A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BooksStore.Blazor.Components", " BooksStore.Blazor.Components\BooksStore.Blazor.Components.csproj", "{4CC1CFCA-50AE-49E8-B866-5D642C81FE0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{D0BCAB91-5D58-48EE-9EC2-67F1719212A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0BCAB91-5D58-48EE-9EC2-67F1719212A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0BCAB91-5D58-48EE-9EC2-67F1719212A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CC1CFCA-50AE-49E8-B866-5D642C81FE0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CC1CFCA-50AE-49E8-B866-5D642C81FE0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CC1CFCA-50AE-49E8-B866-5D642C81FE0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CC1CFCA-50AE-49E8-B866-5D642C81FE0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
