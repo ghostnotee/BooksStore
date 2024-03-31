@@ -8,11 +8,21 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<DynamicComponent Type="componentType" Parameters="parameters"></DynamicComponent>
+
 @code {
-    private int currentCount = 0;
+    private int currentCount;
 
     private void IncrementCount()
     {
         currentCount++;
     }
+
+    private readonly Type componentType = typeof(Weather);
+
+    private readonly Dictionary<string, object> parameters = new()
+    {
+        { "Title", "Welcome to dynamic Component" }
+    };
+
 }

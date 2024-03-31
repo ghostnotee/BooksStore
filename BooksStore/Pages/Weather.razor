@@ -1,10 +1,11 @@
 ﻿@page "/weather"
 @inject HttpClient Http
 @inject ILoggingService LoggingService
+@layout UserLayout
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>@Title</PageTitle>
 
-<h1>Weather</h1>
+<h1>@Title</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
 
@@ -38,6 +39,8 @@ else
 }
 
 @code {
+    [Parameter]
+    public string? Title { get; set; }
     private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()

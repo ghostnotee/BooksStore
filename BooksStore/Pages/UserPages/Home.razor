@@ -1,0 +1,50 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+
+
+@inject IBooksService BooksService
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<DataListView TItemType="Book" Items="_books" ColumnsCount="4">
+    <ItemTemplate Context="book">
+        <BookCard Book="@book" OnAddToCartClicked="AddToCart"></BookCard>
+    </ItemTemplate>
+</DataListView>
+
+<ModalPopup Title="Hi!" IsOpen="@_isWelcomeModalOpen" OnCloseClicked="() => _isWelcomeModalOpen = false">
+    <ChildContent>
+        <p>Welcome to our Books Store, here you will find a huge collection of books to help you build you career in software development, enjoy it!</p>
+    </ChildContent>
+    <FooterContent>
+        <button class="btn btn-primary" @onclick="() => _isWelcomeModalOpen = false">Discover It</button>
+    </FooterContent>
+</ModalPopup>
+
+@code
+{
+    private bool _isWelcomeModalOpen = true;
+    
+    private readonly Book _firstBook = new()
+    {
+        AuthorName = "John Smith",
+        PublishingDate = new DateTime(2022, 08, 01),
+        Title = "Mastering Blazor WebAssembly"
+    };
+    
+    private List<Book> _books = [];
+    protected override async Task OnInitializedAsync()
+    {
+        _books = await BooksService.GetAllBooksAsync();
+    }
+    
+    private readonly List<Book> _booksCart = [];
+    private void AddToCart(Book selectedBook)
+    {
+        _booksCart.Add(selectedBook);
+    }
+}
