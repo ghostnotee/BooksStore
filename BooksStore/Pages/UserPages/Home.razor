@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
-
+@inject NavigationManager Navigation
+@implements IDisposable
 
 @inject IBooksService BooksService
 
@@ -40,11 +40,22 @@ Welcome to your new app.
     protected override async Task OnInitializedAsync()
     {
         _books = await BooksService.GetAllBooksAsync();
+        Navigation.LocationChanged += Navigation_LocationChanged;
+    }
+    
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= Navigation_LocationChanged;
     }
     
     private readonly List<Book> _booksCart = [];
     private void AddToCart(Book selectedBook)
     {
         _booksCart.Add(selectedBook);
+    }
+    
+    private void Navigation_LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        Console.WriteLine($"The location changed to {e.Location}");
     }
 }

@@ -11,11 +11,24 @@
 <DynamicComponent Type="componentType" Parameters="parameters"></DynamicComponent>
 
 @code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "currentCount")]
+    public int? CounterInitialValue { get; set; }
+
     private int currentCount;
 
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (CounterInitialValue is not  null)
+        {
+            currentCount = CounterInitialValue.Value;
+        }
     }
 
     private readonly Type componentType = typeof(Weather);
