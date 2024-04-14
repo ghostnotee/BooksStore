@@ -32,12 +32,12 @@
 
     private async Task ShowAlertAsync()
     {
-        await JsRuntime.InvokeVoidAsync("showAlert", "Unkown user");
+        await JsRuntime.InvokeVoidAsync("showAlert", "ghostNoté welcome..");
     }
     
     private void ShowAlert()
     {
         var jsInProcess = (IJSInProcessRuntime)JsRuntime;
-        jsInProcess.InvokeVoid("showAlert", "Unkown user");
+        jsInProcess.InvokeVoid("showAlert", "synchronous ghostNoté welcome..");
     }
 }
