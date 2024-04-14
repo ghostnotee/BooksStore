@@ -1,3 +1,5 @@
+@inject IJSRuntime JsRuntime
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BooksStore</a>
@@ -15,11 +17,27 @@
                 <li class="nav-item">
                     <NavLink class="nav-link" href="/weather">Fetch Data</NavLink>
                 </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/about">About</NavLink>
+                </li>
             </ul>
+        </div>
+        <div class="d-flex">
+            <button class="btn btn-outline-primary" @onclick="ShowAlert">Login</button>
         </div>
     </div>
 </nav>
 
 @code {
+
+    private async Task ShowAlertAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("showAlert", "Unkown user");
+    }
     
+    private void ShowAlert()
+    {
+        var jsInProcess = (IJSInProcessRuntime)JsRuntime;
+        jsInProcess.InvokeVoid("showAlert", "Unkown user");
+    }
 }

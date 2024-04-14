@@ -5,16 +5,16 @@ namespace BooksStore.Models;
 
 public class SubmitBook
 {
-    // Title is required and value shouldn't be empty and it has to be at least 3 characters long and at most 80 characters long
-    [Required]
+    // Title is required and value shouldn't be empty, and it has to be at least 3 characters long and at most 80 characters long
+    [Required(ErrorMessage = "Kitap adı gereklidir")]
     [StringLength(80, MinimumLength = 3)]
     public string Title { get; set; } = string.Empty;
 
-    // Description is optional but it must be at most 5000 characters long
+    // Description is optional, but it must be at most 5000 characters long
     [StringLength(5000)]
     public string? Description { get; set; }
 
-    // Author is required and value shouldn't be empty and it has to be at least 3 characters long and at most 80 characters long
+    // Author is required and value shouldn't be empty, and it has to be at least 3 characters long and at most 80 characters long
     [Required]
     [StringLength(80, MinimumLength = 3)]
     public string Author { get; set; } = string.Empty;

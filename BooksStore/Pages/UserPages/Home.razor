@@ -39,6 +39,11 @@ Welcome to your new app.
     private List<Book> _books = [];
     protected override async Task OnInitializedAsync()
     {
+        //Call the JS import and pass the path of the external js path that will placed in the wwwroot folder
+        var module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/UserPages/Home.razor.js");
+        //From the module JS object, we can call the getRandomBook() method 
+        var randomBook = await module.InvokeAsync<Book>("getRandomBook");
+        Console.WriteLine(randomBook.Title);
         _books = await BooksService.GetAllBooksAsync();
         Navigation.LocationChanged += Navigation_LocationChanged;
     }
