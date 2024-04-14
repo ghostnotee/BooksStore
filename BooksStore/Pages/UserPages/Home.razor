@@ -1,6 +1,6 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
-
+@inject NavigationManager Navigation
+@implements IDisposable
 
 @inject IBooksService BooksService
 
@@ -10,9 +10,9 @@
 
 Welcome to your new app.
 
-<DataListView TItemType="Book" Items="_books" ColumnsCount="4">
+<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
     <ItemTemplate Context="book">
-        <BookCard Book="@book" OnAddToCartClicked="AddToCart"></BookCard>
+        <BookCard Book="@book" OnAddToCartClicked="AddToCart!"></BookCard>
     </ItemTemplate>
 </DataListView>
 
@@ -39,12 +39,31 @@ Welcome to your new app.
     private List<Book> _books = [];
     protected override async Task OnInitializedAsync()
     {
+        //Call the JS import and pass the path of the external js path that will place in the wwwroot folder
+        var module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/UserPages/Home.razor.js");
+        
+        //From the module JS object, we can call the getRandomBook() method 
+        var randomBook = await module.InvokeAsync<Book>("getRandomBook");
+        Console.WriteLine(randomBook.Title);
         _books = await BooksService.GetAllBooksAsync();
+        Navigation.LocationChanged += Navigation_LocationChanged;
+
+        await JsRuntime.InvokeVoidAsync("callStaticCSharpMethod");
+    }
+    
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= Navigation_LocationChanged;
     }
     
     private readonly List<Book> _booksCart = [];
     private void AddToCart(Book selectedBook)
     {
         _booksCart.Add(selectedBook);
+    }
+    
+    private void Navigation_LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        Console.WriteLine($"The location changed to {e.Location}");
     }
 }

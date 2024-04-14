@@ -1,4 +1,5 @@
-@typeparam TItemType
+@typeparam ItemType
+@implements IDisposable
 
 <div class="grid-container">
     @if (Items != null && Items.Any())
@@ -18,9 +19,28 @@
 </div>
 
 @code {
-    [Parameter] public List<TItemType>? Items { get; set; }
-    [Parameter] public RenderFragment<TItemType> ItemTemplate { get; set; }
-    [Parameter] public EventCallback<TItemType> OnItemClicked { get; set; }
+    [Parameter] public List<ItemType>? Items { get; set; }
+    [Parameter] public RenderFragment<ItemType> ItemTemplate { get; set; }
+    [Parameter] public EventCallback<ItemType> OnItemClicked { get; set; }
     [Parameter] public int ColumnsCount { get; set; } = 4;
     private int _columnWidth => 100 / ColumnsCount;
+    
+    private DotNetObjectReference<DataListView<ItemType>>? _dotNetObjectReference;
+    protected override async Task OnInitializedAsync()
+    {
+        _dotNetObjectReference = DotNetObjectReference.Create(this);
+        await JsRuntime.InvokeVoidAsync("triggerOnWindowResized", _dotNetObjectReference);
+    }
+
+    public void Dispose()
+    {
+        _dotNetObjectReference?.Dispose();
+    }
+
+    [JSInvokable]
+    public void OnWindowResized(int width, int height)
+    {
+        Console.WriteLine($"New width {width} and the new height {height}");
+    }
+
 }

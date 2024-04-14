@@ -1,4 +1,6 @@
-<div style="@BackgroundStyle" @attributes="UserAttributes" class="card">
+@inject NavigationManager Navigation
+
+<div style="@BackgroundStyle" @attributes="UserAttributes" class="card" @onclick="NavigateToBookDetails">
     <h6>@Book?.Title</h6>
 
     <p>Author: @Book?.AuthorName Name</p>
@@ -57,6 +59,12 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         // Make a JavaScript call to manipulate the DOM elements
+    }
+
+    private void NavigateToBookDetails()
+    {
+        var url = $"/book/{Book.Id}";
+        Navigation.NavigateTo(url);
     }
 
 }
