@@ -20,7 +20,7 @@
 
 @code {
     [Parameter] public List<ItemType>? Items { get; set; }
-    [Parameter] public RenderFragment<ItemType> ItemTemplate { get; set; }
+    [Parameter] public RenderFragment<ItemType>? ItemTemplate { get; set; }
     [Parameter] public EventCallback<ItemType> OnItemClicked { get; set; }
     [Parameter] public int ColumnsCount { get; set; } = 4;
     private int _columnWidth => 100 / ColumnsCount;
