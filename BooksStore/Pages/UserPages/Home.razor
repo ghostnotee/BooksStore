@@ -10,7 +10,7 @@
 
 Welcome to your new app.
 
-<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
+<DataListView TItemType="Book" Items="_books" ColumnsCount="4">
     <ItemTemplate Context="book">
         <BookCard Book="@book" OnAddToCartClicked="AddToCart!"></BookCard>
     </ItemTemplate>
@@ -39,7 +39,7 @@ Welcome to your new app.
     private List<Book> _books = [];
     protected override async Task OnInitializedAsync()
     {
-        //Call the JS import and pass the path of the external js path that will place in the wwwroot folder
+        //Call the JS import and pass the path of the external js path that will place in the same directory.
         var module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/UserPages/Home.razor.js");
         
         //From the module JS object, we can call the getRandomBook() method 
