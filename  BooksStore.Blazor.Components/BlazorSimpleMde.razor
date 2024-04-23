@@ -3,16 +3,27 @@
 </textarea>
 
 @code {
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		if (firstRender)
-		{
-			await JsRuntime.InvokeVoidAsync("initializeMarkdownEditor");
-		}
-	}
+    [Parameter] public string? Content { get; set; }
 
-	public async Task<string> GetEditorValueAsync()
-	{
-		return await JsRuntime.InvokeAsync<string>("getMarkdownEditorValue");
-	}
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JsRuntime.InvokeVoidAsync("initializeMarkdownEditor");
+            // Call the setMarkdownEditorValue and pass the Content as a parameter to the JS function
+            try
+            {
+                await JsRuntime.InvokeVoidAsync("setMarkdownEditorValue", Content);
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    public async Task<string> GetEditorValueAsync()
+    {
+        return await JsRuntime.InvokeAsync<string>("getMarkdownEditorValue");
+    }
+
 }

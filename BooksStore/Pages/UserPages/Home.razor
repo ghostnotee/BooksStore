@@ -4,17 +4,24 @@
 
 @inject IBooksService BooksService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Index | Page @PageNumber</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<DataListView ItemType="Book" Items="_books" ColumnsCount="4">
+<DataListView TItemType="Book" Items="_books" ColumnsCount="4">
     <ItemTemplate Context="book">
         <BookCard Book="@book" OnAddToCartClicked="AddToCart!"></BookCard>
     </ItemTemplate>
 </DataListView>
+
+<div class="mt-2">
+    <button class="btn btn-primary" @onclick="() => GoToPage(1)">1</button>
+    <button class="btn btn-primary" @onclick="() => GoToPage(2)">2</button>
+    <button class="btn btn-primary" @onclick="() => GoToPage(3)">3</button>
+</div>
+
 
 <ModalPopup Title="Hi!" IsOpen="@_isWelcomeModalOpen" OnCloseClicked="() => _isWelcomeModalOpen = false">
     <ChildContent>
@@ -27,6 +34,26 @@ Welcome to your new app.
 
 @code
 {
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "pageNumber")]
+    public int PageNumber { get; set; }
+    
+    protected override void OnParametersSet()
+    {
+        if (PageNumber <= 0)
+            PageNumber = 1;
+    }
+    
+    private void GoToPage(int pageNumber)
+    {
+        PageNumber = pageNumber;
+        Navigation.NavigateTo($"/?pageNumber={pageNumber}");
+        // TODO: Logic to fetch the books by the new page number
+    }
+    
+    
+    /*-----------------------------------------------------------------------------------*/
+    
     private bool _isWelcomeModalOpen = true;
     
     private readonly Book _firstBook = new()
@@ -39,7 +66,7 @@ Welcome to your new app.
     private List<Book> _books = [];
     protected override async Task OnInitializedAsync()
     {
-        //Call the JS import and pass the path of the external js path that will place in the wwwroot folder
+        //Call the JS import and pass the path of the external js path that will place in the same directory.
         var module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/UserPages/Home.razor.js");
         
         //From the module JS object, we can call the getRandomBook() method 

@@ -1,4 +1,4 @@
-@typeparam ItemType
+@typeparam TItemType
 @implements IDisposable
 
 <div class="grid-container">
@@ -6,7 +6,7 @@
     {
         foreach (var item in Items)
         {
-            <div class="grid-item" style="width:@_columnWidth" @onclick="() => OnItemClicked.InvokeAsync(item)">
+            <div class="grid-item" style="width:@ColumnWidth" @onclick="() => OnItemClicked.InvokeAsync(item)">
                 @ItemTemplate(item)
             </div>
         }
@@ -19,13 +19,13 @@
 </div>
 
 @code {
-    [Parameter] public List<ItemType>? Items { get; set; }
-    [Parameter] public RenderFragment<ItemType> ItemTemplate { get; set; }
-    [Parameter] public EventCallback<ItemType> OnItemClicked { get; set; }
+    [Parameter] public List<TItemType>? Items { get; set; }
+    [Parameter] public RenderFragment<TItemType>? ItemTemplate { get; set; }
+    [Parameter] public EventCallback<TItemType> OnItemClicked { get; set; }
     [Parameter] public int ColumnsCount { get; set; } = 4;
-    private int _columnWidth => 100 / ColumnsCount;
+    private int ColumnWidth => 100 / ColumnsCount;
     
-    private DotNetObjectReference<DataListView<ItemType>>? _dotNetObjectReference;
+    private DotNetObjectReference<DataListView<TItemType>>? _dotNetObjectReference;
     protected override async Task OnInitializedAsync()
     {
         _dotNetObjectReference = DotNetObjectReference.Create(this);
