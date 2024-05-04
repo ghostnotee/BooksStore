@@ -15,7 +15,7 @@
             <div class="form-group mt-1">
                 <label>Title</label>
                 @*<input type="text" @bind-value="@_book.Title" class="form-control" placeholder="Title" />*@
-                <InputText @bind-Value="@_book.Title" class="form-control"/>
+                <InputText @bind-Value="@_book!.Title" class="form-control"/>
                 <ValidationMessage For="() => _book.Title"/>
             </div>
             <div class="form-group mt-1">

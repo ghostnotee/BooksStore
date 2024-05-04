@@ -2,7 +2,7 @@ namespace BooksStore;
 
 public class AppStateContainer
 {
-    public int CurrentCounter { get; set; }
+    public int CurrentCounter { get; private set; }
 
     public Action<int>? OnCounterChanged { get; set; }
 
