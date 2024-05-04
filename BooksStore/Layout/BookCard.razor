@@ -45,6 +45,7 @@
     protected override async Task OnInitializedAsync()
     {
         // Fetch data from the API
+        await Task.CompletedTask;
     }
 
     // Validate the Book parameter and throws an exception if it's null
@@ -57,11 +58,12 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         // Make a JavaScript call to manipulate the DOM elements
+        await Task.CompletedTask;
     }
 
     private void NavigateToBookDetails()
     {
-        var url = $"/book/{Book.Id}";
+        var url = $"/book/{Book?.Id}";
         Navigation.NavigateTo(url);
     }
 

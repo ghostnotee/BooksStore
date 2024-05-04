@@ -6,11 +6,9 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @_currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Increment Count</button>
-
-@* <DynamicComponent Type="componentType" Parameters="parameters"></DynamicComponent> *@
 
 @code {
 
@@ -18,27 +16,18 @@
     [SupplyParameterFromQuery(Name = "currentCount")]
     public int? CounterInitialValue { get; set; }
 
-    private int currentCount;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-        AppStateContainer.UpdateCounter(currentCount);
-    }
+    private int _currentCount = 0;
 
     protected override void OnParametersSet()
     {
-        if (CounterInitialValue is not  null)
-        {
-            currentCount = CounterInitialValue.Value;
-        }
+        if (CounterInitialValue == null)
+            _currentCount = AppStateContainer.CurrentCounter;
     }
 
-    private readonly Type componentType = typeof(Weather);
-
-    private readonly Dictionary<string, object> parameters = new()
+    private void IncrementCount()
     {
-        { "Title", "Welcome to dynamic Component" }
-    };
+        _currentCount++;
+        AppStateContainer.UpdateCounter(_currentCount);
+    }
 
 }

@@ -7,7 +7,7 @@
         foreach (var item in Items)
         {
             <div class="grid-item" style="width:@ColumnWidth" @onclick="() => OnItemClicked.InvokeAsync(item)">
-                @ItemTemplate(item)
+                @ItemTemplate!(item)
             </div>
         }
     }
