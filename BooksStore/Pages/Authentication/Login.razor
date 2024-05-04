@@ -1,0 +1,44 @@
+@page "/authentication/login"
+@layout UserLayout
+
+
+<PageTitle>Login to BooksStore</PageTitle>”
+<h2>Welcome to BooksStore!</h2>
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        <EditForm Model="_model" OnValidSubmit="SubmitLoginFormAsync">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label>Username</label>
+                <InputText @bind-Value="@_model.Username" class="form-control" />
+                <ValidationMessage For="@(() => _model.Username)" />
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <InputText type="password" @bind-Value="@_model.Password" class="form-control" />
+                <ValidationMessage For="@(() => _model.Password)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </EditForm>
+    </div>
+</div>
+
+@code
+{
+    private LoginRequest _model = new();
+
+    private async Task SubmitLoginFormAsync()
+    {
+        try
+        {
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+}
