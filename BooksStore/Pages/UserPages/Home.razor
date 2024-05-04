@@ -10,11 +10,11 @@
 
 Welcome to your new app.
 
-@* <DataListView  TItemType="Book" Items="_books" ColumnsCount="4"> *@
-@*     <ItemTemplate context="book"> *@
-@*         <BookCard Book="_firstBook" OnAddToCartClicked="AddToCart!"></BookCard> *@
-@*     </ItemTemplate> *@
-@* </DataListView> *@
+<DataListView  TItemType="Book" Items="_books" ColumnsCount="4">
+    <ItemTemplate Context="book">
+        <BookCard Book="@book" OnAddToCartClicked="AddToCart!"></BookCard>
+    </ItemTemplate>
+</DataListView>
 
 <div class="mt-2">
     <button class="btn btn-primary" @onclick="() => GoToPage(1)">1</button>
