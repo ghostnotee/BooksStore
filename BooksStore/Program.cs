@@ -15,5 +15,6 @@ builder.Services.AddScoped<ILoggingService, ConsoleLoggingService>();
 builder.Services.AddScoped<IBooksService, LocalBooksService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddSingleton<AppStateContainer>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 await builder.Build().RunAsync();
